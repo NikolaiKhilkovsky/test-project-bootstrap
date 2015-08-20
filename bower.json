@@ -1,0 +1,19 @@
+{
+  "name": "sirv-test-project",
+  "version": "0.0.0",
+  "authors": [
+    "Dima Chukhai <dippdc@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.4",
+    "angular-mocks": "~1.4.4"
+  }
+}

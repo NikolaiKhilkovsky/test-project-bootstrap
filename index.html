@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-mocks/angular-mocks.js"></script>
+    <script src="api-mock.js"></script>
+
+    <script src="app.js"></script>
+    <title>Sirv Test Project by {{authorName}}</title>
+</head>
+<body ng-app="app">
+
+<ol ng-controller="ApiTestController">
+    <li ng-repeat="f in files">{{f.name}} {{f.date | date :'medium'}} {{f.size/1e6 | number:2}}</li>
+</ol>
+
+</body>
+</html>
