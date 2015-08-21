@@ -2,10 +2,15 @@
 
 angular.module('app', ['httpAPIMock'])
     .controller('ApiTestController', function ($scope, $http) {
-        $http.get('/api/files?dir=/image-0.jpg')
+        $http.get('/api/files')
             .then(function (response) {
                 console.log('List', response.data);
                 $scope.files = response.data;
+            });
+
+        $http.get('/api/files?dir=/my-vacation')
+            .then(function (response) {
+                console.log('List', response.data);
             })
             .catch(function (response) {
                 console.error('list', response);
