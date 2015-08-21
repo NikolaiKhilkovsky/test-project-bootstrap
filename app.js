@@ -2,15 +2,13 @@
 
 angular.module('app', ['httpAPIMock'])
     .controller('ApiTestController', function ($scope, $http) {
-        $http.get('/api/files')
+        $http.get('/api/files?dir=/image-0.jpg')
             .then(function (response) {
-                console.log('Files', response.data);
+                console.log('List', response.data);
                 $scope.files = response.data;
-            });
-
-        $http.get('/api/files/exists?file=/image-10.jpg')
-            .then(function (response) {
-                console.log('Exists', response.data);
+            })
+            .catch(function (response) {
+                console.error('list', response);
             });
 
         $http.post('/api/files/rename', {from: '/image-2.jpg', to: '/image-3.jpg'})

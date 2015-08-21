@@ -14,22 +14,64 @@ var files = [
 ];
 
 angular.module('httpAPIMock', ['ngMockE2E'])
-    .run(function ($httpBackend) {
-        function find(value) {
+    .service('path', function(){
+        return {
+            normalize: function(_path) {
+                return '/' + _path.trim().split(/\/+/).filter(angular.identity).join('/');
+            },
+            dirname: function(_path) {
+                return this.normalize(_path).split('/').slice(0, -1).join('/') || '/';
+            }
+        };
+    })
+    .run(function ($httpBackend, path) {
+        function find(_path) {
+            _path = path.normalize(_path);
             return files.reduce(function (_found, _file) {
-                return _found || (value === _file.name ? _file : null);
+                return _found || (_path === _file.name ? _file : null);
             }, null);
         }
 
+        function list(_path) {
+            _path = path.normalize(_path);
+
+            return angular.copy(files).filter(function(_file){
+                return _path == path.dirname(_file.name);
+            })
+        }
+
+        function e(code, message) {
+            return function(_path){
+                return {
+                    code: code.toUpperCase(),
+                    message: message.replace(':path', _path)
+                }
+            }
+        }
+
+        var enoent = e('ENOENT', 'No such file or directory \':path\'');
+        var enotdir = e('ENOTDIR', 'Not a directory \':path\'');
+        var eexist = e('EEXIST', 'File already exists \':path\'');
+
         $httpBackend.whenGET('/api/files').respond(function(){
-            return [200, angular.copy(files)];
+            return [200, list('/')];
         });
+        $httpBackend.whenGET(/^\/api\/files\?dir=/).respond(function(method, uri){
+            var requestedFilePath = path.normalize(uri.slice(15));
 
-        $httpBackend.whenGET(/^\/api\/files\/exists\?file=/).respond(function (method, uri) {
-            var requestedFilePath = uri.slice(23);
-            var requestedFile = find(requestedFilePath);
+            if('/' === requestedFilePath) {
+                return [200, list('/')];
+            } else {
+                if(!find(requestedFilePath)) {
+                    return [404, enoent(requestedFilePath)]
+                }
 
-            return [200, !!requestedFile];
+                if(requestedFilePath.match(/\.(jpg|txt)$/)) {
+                    return [400, enotdir(requestedFilePath)]
+                }
+
+                return [200, list(requestedFilePath)];
+            }
         });
 
         $httpBackend.whenPOST('/api/files/rename').respond(function (method, uri, data) {
@@ -39,17 +81,11 @@ angular.module('httpAPIMock', ['ngMockE2E'])
             var target = find(data.to);
 
             if(!file) {
-                return [404, {
-                    code: 'ENOENT',
-                    message: 'No such file or directory \':path\''.replace(':path', data.from)
-                }];
+                return [404, enoent(data.from)];
             }
 
             if(target) {
-                return [400, {
-                    code: 'EEXIST',
-                    message: 'File already exists \':path\''.replace(':path', data.to)
-                }];
+                return [400, eexist(data.to)];
             }
 
             file.name = data.to;
