@@ -44,8 +44,8 @@ Name | Size (in MB) | Date added (Today, Yesterday or YYYY-MM-DD) | Action
 Rename API will respond with an error if you try to use existent file name. In this case ask for a new name and repeat operation.
 
 ##Create a file preview page:
-Left: 'preview' for image (use http://placekitten.com), random text for text
-Right: show file information information: name, type, parent directory, date, size (same formatting as in list), and a rename button.
+- Left: 'preview' for image (use http://placekitten.com), random text for text
+- Right: show file information information: name, type, parent directory, date, size (same formatting as in list), and a rename button.
 
 ##Create a simple directive for image/text preview:
 ```html
