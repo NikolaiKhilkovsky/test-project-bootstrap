@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"></link>
+    <link rel="stylesheet" href="app.css"></link>
 
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-mocks/angular-mocks.js"></script>
@@ -11,10 +16,50 @@
     <title>Sirv Test Project by {{authorName}}</title>
 </head>
 <body ng-app="app">
+<body>
 
-<ol ng-controller="ApiTestController">
-    <li ng-repeat="f in files">{{f.name}} {{f.date | date :'medium'}} {{f.size/1e6 | number:2}}</li>
-</ol>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="starter-template">
+        <h1>Simple files browser</h1>
+        <p class="lead">
+            It's a starter template for your test project<br>
+        </p>
+
+        <div class="text-left">
+            <p>Goals:</p>
+            <ul>
+                <li>Fit requirements</li>
+                <li>Clean UI</li>
+                <li>Clean, readable (not overcomplicated), reusable code</li>
+                <li>Logical modular struture, separation of concerns</li>
+            </ul>
+
+            <p>Hints:</p>
+            <ul>
+                <li>Calls to HTTP API are mocked, source: <a href="api-mock.js">api-mock.js</a>, usage examples: <a href="app.js">app.js</a></li>
+                <li>Feel free to structure application files and components as you want.</li>
+                <li>Feel free to tweak css styles to fit your vision of clean UI.</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="list-group" ng-controller="ApiTestController">
+        <a href="" class="list-group-item" ng-repeat="f in files">
+            {{f.name}} - <span class="text-muted">{{f.date | date :'medium'}}</span>
+        </a>
+    </ul>
+
+</div>
 
 </body>
 </html>
