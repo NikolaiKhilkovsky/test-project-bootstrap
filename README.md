@@ -33,7 +33,9 @@ Assuming there are only 3 types of files:
 
 ##Create a page showing list of files in a table-like view:
 Name | Size (in MB) | Date added (Today, Yesterday or YYYY-MM-DD) | Action
+
 [a]image.jpg[/a] | 1.5MB | Today | [a]Rename[/a]
+
 - Directories should always go first
 - Ability to sort list (see description of files service above)
 - Click on directory - proceed to browse that directory
