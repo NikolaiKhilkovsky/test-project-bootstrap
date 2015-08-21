@@ -8,7 +8,7 @@ angular.module('app', ['httpAPIMock'])
                 $scope.files = response.data;
             });
 
-        $http.get('/api/files/exists?file=/image-1.jpg')
+        $http.get('/api/files/exists?file=/image-10.jpg')
             .then(function (response) {
                 console.log('Exists', response.data);
             });
@@ -25,7 +25,7 @@ angular.module('app', ['httpAPIMock'])
             });
 
         //Target file already exists error
-        $http.post('/api/files/rename', {from: '/image-0.jpg', to: '/image-1.jpg'})
+        $http.post('/api/files/rename', {from: '/image-0.jpg', to: '/image-10.jpg'})
             .catch(function (response) {
                 console.error('Rename', response);
             });
