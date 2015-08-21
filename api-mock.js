@@ -5,7 +5,7 @@ var files = [
     {name: '/secrets & documents/trip.txt', date: 1440017128876, size: 25e3},
     {name: '/secrets & documents', date: 1439098268876, size: 0},
     {name: '/image-0.jpg', date: 1439908288876, size: 255e3},
-    {name: '/image-1.jpg', date: 1439918198876, size: 1155e3},
+    {name: '/image-10.jpg', date: 1439918198876, size: 1155e3},
     {name: '/image-2.jpg', date: 1440098198876, size: 3155e3},
     {name: '/my-vacation', date: 1439098268876, size: 0},
     {name: '/my-vacation/photo-000.jpg', date: 1439098268876, size: 22205e3},
