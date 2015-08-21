@@ -13,7 +13,8 @@ POST /api/files/rename {from, to}
 var stat = {
   name: '/path/to/image-0.jpg' 
   date: 1439473396695, 
-  size: 12345
+  size: 12345,
+  [directory: true]
 }
 ```
 
