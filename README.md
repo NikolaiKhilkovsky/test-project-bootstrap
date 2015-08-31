@@ -2,10 +2,10 @@
 
 ##Given files API:
 ```
-GET /api/files {path}
+GET /api/files[?path=]
 [{stat}]
  
-POST /api/files/rename {from, to}
+POST /api/files/rename {from: ... , to: ... }
 {stat}
 ```
 
@@ -30,7 +30,13 @@ Assuming there are only 3 types of files:
     2) sum of square roots of date digits ( 123 -> sqrt(1) + sqrt(2) + sqrt(3) )
 - rename() - rename file using HTTP API
 
-##Create a service wrapper for standart dialogs: alert, prompt, confirm.
+##Create a service - promised wrapper for standart dialogs: alert, prompt, confirm.
+Each api method should return promise, usage example:
+```javascript
+dialogs.prompt('message').then( ... )
+```
+This makes it possible to replace native dialogs in the future
+and create dialogs with more complex logic.
 
 ##Create a page showing list of files in a table-like view:
 ```
@@ -52,7 +58,7 @@ Rename API will respond with an error if you try to use existent file name. In t
 
 ##Create a simple directive for image/text preview:
 ```html
-<preview file='stat' style='width: 200px; height: 200px'>{{file.name}} {{file.size}}</preview>
+<preview file='stat' style='width: 200px; height: 200px'></preview>
 ```
 
 ###Allowed libs:
