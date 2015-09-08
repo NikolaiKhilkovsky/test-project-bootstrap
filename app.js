@@ -4,8 +4,16 @@ angular.module('app', ['ngRoute', 'httpAPIMock'])
     .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
         $routeProvider
             .when('/', {
-                templateUrl: '/directory.html',
-                controller: 'MainCtrl'
+                templateUrl: '/partials/directory.html',
+                controller: 'DirectoryCtrl'
+            })
+            .when('/directory/:fName*', {
+                templateUrl: '/partials/directory.html',
+                controller: 'DirectoryCtrl'
+            })
+            .when('/file/:fName*', {
+                templateUrl: '/partials/file.html',
+                controller: 'FileCtrl'
             })
             .otherwise({
                 redirectTo: '/'
@@ -29,7 +37,7 @@ angular.module('app', ['ngRoute', 'httpAPIMock'])
         return function (path) {
             path = path ? '?path=' + path : '';
             return $http.get('/api/files' + path).then(function (response) {
-                return response;
+                return response.data;
             }).catch(function (response) {
                 console.error(response.config.method, response.config.url, response.config.data, response.status, '\nResponse:', response.data);
                 dialog.alert(response.data.message);
@@ -54,9 +62,13 @@ angular.module('app', ['ngRoute', 'httpAPIMock'])
             });
         };
     })
-    .controller('MainCtrl', function ($scope, list, sort, rename, dialog) {
-        console.dir($scope)
+    .run(['$httpBackend', function ($httpBackend){
+        $httpBackend.whenGET(/^\/partials\//).passThrough();
+    }])
+    .controller('MainCtrl', function ($scope) {
         $scope.authorName = 'Nikko';
+    })
+    .controller('DirectoryCtrl', function($scope, $routeParams, list, sort, rename, dialog){
         $scope.reverse_name = false;
         $scope.reverse_date = false;
         $scope.predicate = sort('name', $scope.reverse_name);
@@ -71,7 +83,9 @@ angular.module('app', ['ngRoute', 'httpAPIMock'])
                 });
             }
         };
-        list().then(function(response){
-            $scope.files = response.data;
-        });;
+        list($routeParams.fName).then(function(response){
+            $scope.files = response;
+        });
+    })
+    .controller('FileCtrl', function($scope){
     });
