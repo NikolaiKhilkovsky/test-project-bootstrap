@@ -74,6 +74,17 @@ appServices.service('sort', ['$location', function ($location) {
             case 'name':
                 scope.files.sort(function(a, b){
                     if(a.directory === b.directory){
+                        if(!a.directory){
+                            if(a.type > b.type){
+                                return (reverse ? 1 : -1);
+                            }
+                            else if(a.type < b.type){
+                                return (reverse ? -1 : 1);
+                            }
+                            else {
+                                return (reverse ? 1 : -1) * (a.name < b.name ? -1 : 1);
+                            }
+                        }
                         return (reverse ? 1 : -1) * (a.name < b.name ? -1 : 1);
                     }
                     else{
@@ -83,7 +94,6 @@ appServices.service('sort', ['$location', function ($location) {
                 break;
             case 'date':
                 scope.files.sort(function(a, b){
-                    console.log()
                     if(a.directory === b.directory){
                         return (reverse ? 1 : -1) * (dataConvert(a.date) - dataConvert(b.date));
                     }

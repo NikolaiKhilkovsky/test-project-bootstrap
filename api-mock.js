@@ -11,7 +11,12 @@
         {name: '/my-vacation', date: 1439098268876, size: 0, directory: true},
         {name: '/my-vacation/photo-000.jpg', date: 1439098268876, size: 22205e3},
         {name: '/my-vacation/photo-001.jpg', date: 1440058258876, size: 6180e3},
-        {name: '/my-vacation/photo-002.jpg', date: 1440018178876, size: 1073741824}
+        {name: '/my-vacation/photo-002.jpg', date: 1440018178876, size: 1073741824},
+        {name: '/photo-000.jpg', date: 1439098268876, size: 22205e3},
+        {name: '/photo-001.jpg', date: 1440058258876, size: 6180e3},
+        {name: '/photo-002.jpg', date: 1440018178876, size: 1073741824},
+        {name: '/cash.txt', date: 1440017128876, size: 25e3},
+        {name: '/trip.txt', date: 1440017128876, size: 25e3}
     ];
 
     angular.module('httpAPIMock', ['ngMockE2E'])
