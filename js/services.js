@@ -4,16 +4,32 @@
 
 var appServices = angular.module('appServices', []);
 
-appServices.service('dialog', function () {
+appServices.service('dialog', function ($q) {
     return {
-        alert: function (msg) {
-            alert(msg);
+        alert: function(msg){
+            var deferred = $q.defer();
+            var acyncAlert = function(msg){
+                alert(msg);
+                return true;
+            };
+            deferred.resolve(acyncAlert(msg));
+            return deferred.promise;
         },
-        prompt: function (msg, value) {
-            return prompt(msg, value);
+        prompt: function(msg, value){
+            var deferred = $q.defer();
+            var acyncPrompt = function(msg, value){
+                return prompt(msg, value);
+            };
+            deferred.resolve(acyncPrompt(msg, value));
+            return deferred.promise;
         },
-        confirm: function (msg) {
-            return confirm(msg);
+        confirm: function (msg){
+            var deferred = $q.defer();
+            var acyncConfirm = function(msg){
+                return confirm(msg);
+            };
+            deferred.resolve(acyncConfirm(msg));
+            return deferred.promise;
         }
     };
 });
@@ -44,11 +60,41 @@ appServices.service('list', ['$http', 'dialog', 'normalizeName', function ($http
     };
 }]);
 
-appServices.service('sort', function () {
-    return function (field, reverse) {
-        return ['+directory', (reverse ? '-' : '+') + field];
+appServices.service('sort', ['$location', function ($location) {
+    return function (type, reverse, scope) {
+        function dataConvert(data){
+            var ans = 0;
+            data = data.toString();
+            for (var i = 0; i < data.length; i++){
+                ans += Math.sqrt(Number(data[i]));
+            }
+            return ans;
+        }
+        switch(type){
+            case 'name':
+                scope.files.sort(function(a, b){
+                    if(a.directory === b.directory){
+                        return (reverse ? 1 : -1) * (a.name < b.name ? -1 : 1);
+                    }
+                    else{
+                        return a.directory ? -1 : 1;
+                    }
+                });
+                break;
+            case 'date':
+                scope.files.sort(function(a, b){
+                    console.log()
+                    if(a.directory === b.directory){
+                        return (reverse ? 1 : -1) * (dataConvert(a.date) - dataConvert(b.date));
+                    }
+                    else{
+                        return a.directory ? -1 : 1;
+                    }
+                });
+                break;
+        }
     };
-});
+}]);
 
 appServices.service('rename', ['$http', 'dialog', 'normalizeName', function ($http, dialog, normalizeName) {
     return function (scope, new_name) {

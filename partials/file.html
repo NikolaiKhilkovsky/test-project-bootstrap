@@ -19,8 +19,8 @@
                     <td>{{f.name}}</td>
                     <td>{{f.type}}</td>
                     <td>{{f.path | arrayToString}}</td>
-                    <td>{{f.size | number}}</td>
-                    <td>{{f.date|date:'dd.MM.yyyy HH:mm:ss'}}</td>
+                    <td>{{f.size/1024 | number:0}}MB</td>
+                    <td>{{f.date|date:'dd.MM.yyyy'}}</td>
                     <td><a href="" ng-click="rename(this)">Rename</a></td>
                 </tr>
             </tbody>
