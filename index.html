@@ -30,7 +30,8 @@
                 <h1>Simple files browser</h1>
             </div>
             <ul class="breadcrumb">
-                <li class="active">Home</li>
+                <li><a href="/">Home</a></li>
+                <li ng-repeat="b in breadcrumb"><a href="{{b.url}}">{{b.name}}</a></li>
             </ul>
             <div ng-view></div>
         </div>

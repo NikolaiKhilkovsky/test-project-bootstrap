@@ -1,4 +1,29 @@
 <div class="row" ng-controller="FileCtrl">
-    <div class="col-sm-3">tut preview</div>
-    <div class="col-sm-9">tut data</div>
+    <div class="col-sm-3">
+        <preview ng-repeat="f in files" file="{{f.fullname}}" style='width: 200px; height: 300px'></preview>
+    </div>
+    <div class="col-sm-9">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Parent directory</th>
+                    <th>Size</th>
+                    <th>Date added</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="f in files">
+                    <td>{{f.name}}</td>
+                    <td>{{f.type}}</td>
+                    <td>{{f.path | arrayToString}}</td>
+                    <td>{{f.size | number}}</td>
+                    <td>{{f.date|date:'dd.MM.yyyy HH:mm:ss'}}</td>
+                    <td><a href="" ng-click="rename(this)">Rename</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
